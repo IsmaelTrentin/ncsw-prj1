@@ -1,0 +1,4 @@
+# ignore all logs
+*.log
+.texpadtmp
+.DS_Store

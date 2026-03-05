@@ -1,0 +1,74 @@
+\documentclass[unicode,11pt,a4paper,oneside,numbers=endperiod,openany]{scrartcl}
+\renewcommand{\thesubsection}{\arabic{subsection}}
+
+\usepackage{amsfonts}
+
+\input{assignment.sty}
+\begin{document}
+
+\setassignment
+\setduedate{12 March 2026, 11:59 PM}
+
+\serieheader{Numerical Computing}{2026}{\textbf{Student:} Ismael
+Trentin}{\textbf{Discussed with:} Xavier Horisberger, Massimiliano Gusmini}{Solution for Project
+1}{}
+\newline
+
+\section{Theoretical questions \points{1.5}}
+
+\begin{enumerate}
+  \item[(a)] \textbf{What are an eigenvector, an eigenvalue and an eigenbasis?}
+  \\[.5em]
+  \textbf{Eigenvectors} are non-null vectors that satisfy the following equation:
+  $$
+  \hat{A}\vec{x} = \lambda\vec{x}
+  $$
+  where $\hat{A}$ is a square matrix and $\lambda$ is a scalar number, meaning 
+  that the transformation of $\vec{x}$ performed by $\hat{A}$, produces a multiple of
+  $\vec{x}$ by exactly $\lambda$ times. Knowing this definition, we can easily define that an \textbf{eigenvalue} is simply $\lambda$, that is, the real scaling coefficient for $\vec{x}$. Since $\lambda \in \mathbb{R}$, there exist an infinite number of eigenvectors for a bounded eigenvalue. To better group a family of eigenvectors, an \textbf{eigenbasis} is defined. An eigenbasis for $\lambda$ is defined as:
+  $$
+  E_{\lambda} = \{ \vec{v} ~ | ~ \hat{A}\vec{v} = \lambda \vec{v} \}
+  $$
+  
+  \item[(b)] \textbf{What assumptions should be made to guarantee convergence of the power method?}
+  \\[.5em]
+  Having a matrix $\hat{A}$ of dimensions $n \times n$, $\hat{A}$ must have $n$ linearly independent eigenvectors so that the initial state vector (i.e. guess vector) can be expressed as a linear combination of those eigenvectors. This enables us to factor out the dominant eigenvalue and study the convergence since the other eigenvalues will eventually round off to zero. Therefore, there must be only a single dominant eigenvalue and the initial state vector must also have a non-zero component in the direction of the dominant eigenvalue.
+  
+  \item[(c)] \textbf{What is the shift and invert approach?}
+  \\[.5em]
+  The shift and invert approach is a technique that utilizes the inverse iteration algorithm to significantly increase the speed of convergence for eigenvalue computations. The shift consists in subtracting a shift factor $\alpha$ from the main diagonal of $\hat{A}$ so that the new eigenvalues become $(\lambda_j - \alpha)$, while the invert part inverts the matrix resulted from the latter operation $(\hat{A} - \alpha\hat{I})^{-1}$, thus giving the following eigenvalues:
+  $$
+  \mu_j = \frac{1}{\lambda_j - \alpha}
+  $$
+  By choosing a factor $\alpha$ that is very close to a specific target $\lambda_t$, the value $(\lambda_t - \alpha)$ becomes extremely small. This causes $\mu_j$ to become significantly more dominant than the other eigenvalues, reducing the number of iterations needed to perform the computation.
+
+  
+  \item[(d)] \textbf{What is the difference in cost of a single iteration of the power method, compared to the inverse iteration?}
+  \\[.5em]
+  The main difference in the cost comes from the power method using a matrix product as its primary operation, resulting in $O(n^2)$ time complexity, while the inverse iteration needs to solve linear systems implying $O(n^3)$ for factorization and $O(n^2)$ for substitution, resulting in $O(n^3)$ time complexity. Since the inverse iteration method converges faster, we will still perform computationally slower steps, but with a lower number of iterations.
+  
+  \item[(e)] \textbf{What is a Rayleigh quotient and how can it be used for eigenvalue computations?}
+  \\[.5em]
+  The Rayleigh quotient is a scalar value that provides the best possible estimate for an eigenvalue given a corresponding vector. For a real matrix $\hat{A}$ and a vector $\vec{v}$, it is defined as:
+  $$
+  \mu(\vec{v}) = \frac{\vec{v}^T \hat{A}\vec{v}}{\vec{v}^T\vec{v}}
+  $$
+  In eigenvalue computations, it is used as an estimate tool, while in the Rayleigh Quotient Iteration, its value takes place as the shift $\alpha$ factor, making it dynamic.
+  
+\end{enumerate}
+
+\section{Other webgraphs \points{0.5}}
+
+\section{Connectivity matrix and subcliques \points{0.5}}
+
+\section{Connectivity matrix and disjoint subgraphs \points{1}}
+
+\section{PageRanks by solving a sparse linear system \points{2.5}}
+
+\section{Graph perturbations \points{1.5}}
+
+\section{Introduction to HPC: Algorithmic performance \points{1}}
+
+\newpage
+
+\end{document}
