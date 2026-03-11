@@ -1,4 +1,4 @@
-function x = pagerank(U,G,p)
+function x = pagerank(U,G,p,alpha)
 % PAGERANK  Google's PageRank
 % pagerank(U,G,p) uses the URLs and adjacency matrix produced by SURFER,
 % together with a damping factory p, (default is .85), to compute and plot
@@ -23,22 +23,29 @@ D = sparse(k,k,1./c(k),n,n);
 e = ones(n,1);
 I = speye(n,n);
 
-% ------------------------------- POWER METHOD ----------------------------
+% ------------------------------- INVERSE ITER ----------------------------
 % Solve (I - p*G*D)*x = e
-disp('Using power method\n');
-x = ones(n,1)/n;
-x_prev = zeros(size(x));
-G = p*G*D;
+disp('Using inverse iteration\n');
 z = ((1-p)*(c~=0) + (c==0))/n;
+A = p*G*D + e*z;
+x = ones(n, 1)/n;
+
+ray_q = (transpose(x)*A*x)/(transpose(x)*x);
+ray_q_prev = 0
+
+% accounting tollerance since RQ is an approx and speeds up the
+% convergence quite a lot.
 iter = 0;
-while norm(x - x_prev, 1) > 0.0000001
-    x_prev = x;
-    x = G*x + e*(z*x)
+while norm(ray_q - ray_q_prev, 1) > 0.0000000000001
+    ray_q_prev = ray_q;
+    x = (alpha*I - A)\x;
+    x = abs(x)
+    x = x/norm(x,1)
+    ray_q = (transpose(x)*A*x)/(transpose(x)*x);
     iter = iter + 1;
 end
 disp('took iter: ');
 iter
-
 % -------------------------------------------------------------------------
 
 % Normalize so that sum(x) == 1.
