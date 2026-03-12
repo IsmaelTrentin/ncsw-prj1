@@ -1,4 +1,4 @@
-function x = pagerank(U,G,p)
+function [x, t, i] = pagerank(U, G, p)
 % PAGERANK  Google's PageRank
 % pagerank(U,G,p) uses the URLs and adjacency matrix produced by SURFER,
 % together with a damping factory p, (default is .85), to compute and plot
@@ -28,6 +28,7 @@ I = speye(n,n);
 disp('Using power method\n');
 x = ones(n,1)/n;
 x_prev = zeros(size(x));
+tic();
 G = p*G*D;
 z = ((1-p)*(c~=0) + (c==0))/n;
 iter = 0;
@@ -36,8 +37,10 @@ while norm(x - x_prev, 1) > 0.0000001
     x = G*x + e*(z*x)
     iter = iter + 1;
 end
-disp('took iter: ');
-iter
+t = toc();
+i = iter;
+% disp('took iter: ');
+% iter
 
 % -------------------------------------------------------------------------
 
