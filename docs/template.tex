@@ -9,6 +9,9 @@
 \usepackage{matlab-prettifier}
 \usepackage{booktabs}
 \usepackage{comment}
+\usepackage[abs]{overpic}
+\usepackage{xcolor}
+\usepackage{xurl}
 
 \input{assignment.sty}
 \begin{document}
@@ -17,8 +20,7 @@
 \setduedate{12 March 2026, 11:59 PM}
 
 \serieheader{Numerical Computing}{2026}{\textbf{Student:} Ismael
-Trentin}{\textbf{Discussed with:} Xavier Horisberger, Massimiliano Gusmini}{Solution for Project
-1}{}
+Trentin}{\textbf{Discussed with:} Xavier Horisberger}{Solution for Project 1}{}
 \newline
 
 \section{Theoretical questions \points{1.5}}
@@ -62,7 +64,91 @@ Trentin}{\textbf{Discussed with:} Xavier Horisberger, Massimiliano Gusmini}{Solu
 \end{enumerate}
 
 \section{Other webgraphs \points{0.5}}
-
+For the first webgraph, the neovim homepage was chosen, while for the second one, the Wikipedia page for 'Steven Universe' was picked. The root URLs passed to \texttt{surfer.m} are \url{https://neovim.io} and \url{https://en.wikipedia.org/wiki/Steven_Universe}. The script produced the following connectivity matrices:
+\begin{figure}[htp]
+     \centering
+     \begin{subfigure}[b]{0.48\textwidth}
+         \centering
+         % 1. Use overpic instead of includegraphics
+         \begin{overpic}[width=\textwidth]{assets/nvim_cmat.pdf}
+            \put(127,40){\color{orange}\small GH Features}
+            \put(127,52){\color{orange}\framebox(56,56){}}
+         \end{overpic}
+         \caption{Neovim Homepage Page Ranks}
+         \label{fig:nvimpr}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.48\textwidth}
+         \centering
+         \begin{overpic}[width=\textwidth]{assets/wikisu_cmat.pdf}
+            \put(70,170){\color{orange}\small Languages}
+            \put(8,170){\color{orange}\framebox(56,56){}}
+            \put(150,20){\color{orange}\small RT Reviews}
+            \put(205,12){\color{orange}\framebox(18,18){}}
+         \end{overpic}
+         \caption{Wikipedia - Steven Universe Page Ranks}
+         \label{fig:wikisupr}
+     \end{subfigure}
+     \caption{Connectivity Matrices}
+     \label{fig:otherpr}
+\end{figure}
+\\
+Based on the provided connectivity matrices, 3 cliques can be easily noticed.
+\paragraph{Neovim Homepage}
+\begin{itemize}
+    \item \textbf{GitHub Feature:} a relatively large clique connects all the github features related pages. By having a major number of references pointing to GH, this was clearly to be expected
+    \item \textbf{Authority Nodes:} the solid vertical lines represent authority nodes/pages that receive links from almost every other page in the domain. This structural pattern explains why systemic GitHub pages and repositories dominate the top PageRanks alongside core Neovim community links
+\end{itemize}
+\paragraph{Wikipedia - Steven Universe}
+\begin{itemize}
+    \item \textbf{Languages Clique:} the large, highly dense block in the top-left of matrix (b), represents a massive clique. In Wikipedia, articles are typically cross-linked to their corresponding translations in other languages. This creates a near-complete graph where almost every language node links to every other language node
+    \item \textbf{Rotten Tomatoes Reviews:} the smaller dense block in the bottom-right, correlates directly to the clustered Rotten Tomatoes URLs for the seasons of the show (\texttt{s01} through \texttt{s05}). These season review pages form a tightly knit clique, heavily cross-linking to one another to facilitate navigation between different seasons of the show
+\end{itemize}
+Running the pagerank algorithm on the 2 webgraphs and picking the 10 most relevant ranks for both root URLs produced the subsequent tables:
+\vspace{1em}
+{
+\hypersetup{hidelinks}
+\begin{table}[h]
+    \centering
+    \begin{tabular}{lp{12cm}}
+        \toprule
+        \textbf{Rank} & \textbf{URL} \\
+        \midrule
+        0.030588 & \url{https://archiveprogram.github.com} \\
+        0.016507 & \url{https://www.binpress.com/vim-creator-bram-moolenaar-interview} \\
+        0.016507 & \url{https://www.youtube-nocookie.com/embed/c4oyfL5o7DU} \\
+        0.016507 & \url{https://bsky.app/profile/neovim.io} \\
+        0.016507 & \url{https://vi.stackexchange.com} \\
+        0.0097388 & \url{https://github.blog} \\
+        0.0096807 & \url{https://support.github.com} \\
+        0.0096807 & \url{https://github.com/pricing} \\
+        0.008204 & \url{https://desktop.github.com} \\
+        0.0079236 & \url{https://github.com/orgs/community/discussions} \\
+        \bottomrule
+    \end{tabular}
+    \caption{Page Ranks - Neovim Homepage}
+\end{table}
+\begin{table}[h]
+    \centering
+    \begin{tabular}{lp{12cm}}
+        \toprule
+        \textbf{Rank} & \textbf{URL} \\
+        \midrule
+        0.024353 & \url{https://www.latimes.com/entertainment-arts/tv/story/2020-03-25/steven-universe-rebecca-sugar-lgbtq-legacy} \\
+        0.014794 & \url{https://www.polygon.com/2018/5/3/17315264/steven-universe-ending-spoilers-cartoon-network} \\
+        0.011288 & \url{https://www.theverge.com/2017/2/1/14463582/steven-universe-cartoon-network-fantasy-tolerance-empathy} \\
+        0.011125 & \url{https://www.rottentomatoes.com/tv/steven_universe/s05} \\
+        0.010811 & \url{https://www.rottentomatoes.com/tv/steven_universe/s01} \\
+        0.010811 & \url{https://www.rottentomatoes.com/tv/steven_universe/s02} \\
+        0.010811 & \url{https://www.rottentomatoes.com/tv/steven_universe/s03} \\
+        0.010811 & \url{https://www.rottentomatoes.com/tv/steven_universe/s04} \\
+        0.010689 & \url{https://ew.com/article/2015/06/15/steven-universe-creator-growing-gender-politics-her-brother} \\
+        0.010457 & \url{https://www.looper.com/767706/25-shows-like-adventure-time-you-should-watch-next} \\
+        \bottomrule
+    \end{tabular}
+    \caption{Page Ranks - Wikipedia 'Steven Universe'}
+\end{table}
+}
 \section{Connectivity matrix and subcliques \points{0.5}}
 The organizations responsible for generating the observed cliques can be easily mapped to the used subdomains in the given URLs. Here is the list of the \textbf{10} cliques that were identified, mapped to their respective subdomain used by the department:
 
@@ -275,7 +361,7 @@ While for the \textbf{inverse iteration} method:
 \section{Graph perturbations \points{1.5}}
 \subsection{Degree Centrality}
 To calculate the 5 nodes with the highest degree centrality, given the graph \texttt{WIKI450.m}, the following code was implemented:
-\vspace{1em}
+\vspace{.5em}
 \begin{lstlisting}[style=Matlab-editor]
 function [l, R] = degc(G, U, n)
     total_deg = sum(G, 1)' + sum(G, 2);
@@ -291,8 +377,9 @@ function [l, R] = degc(G, U, n)
         'VariableNames', {'Index', 'URL', 'Degree'});
 end
 \end{lstlisting}
-\vspace{1em}
+\vspace{.5em}
 which also outputs the following table:
+\vspace{.5em}
 {
 \hypersetup{hidelinks}
 \begin{table}[htb!]
@@ -313,21 +400,16 @@ which also outputs the following table:
 \end{table}
 }
 \subsection{Nodes Isolation}
-After removing the incident edges from the 5 nodes obtained from the previous section, their degree centrality is obviously zero. Having saved the newly modified matrix in \texttt{WIKI450\_ISO}, let us compare the two matrices side by side:
-\\[1em]
-\begin{comment}
+After removing the incident edges from the 5 nodes obtained from the previous section, their degree centrality is obviously zero. Having changed only 5 nodes out of the 450 total nodes, the change is unnoticible since it corresponds to roughly a $1.1\%$ change in the final matrix.
 \begin{figure}[htb!]
      \centering
-     \includegraphics[width=\textwidth]{assets/deg_centrality_2.pdf}
+     \includegraphics[width=0.80\textwidth]{assets/deg_centrality_2.png}
      \caption{nodes isolation}
      \label{fig:degc2}
 \end{figure}
-\end{comment}
-\\[1em]
-Having changed only 5 nodes out of the 450 total nodes, the change is unnoticible since it corresponds to roughly a $1.1\%$ change in the final matrix.
 \subsection{Nodes Impact}
-To determine the top 10 URLs before and after the nodes isolation, the following function was implemented: \\
-\vspace{.1em}
+To determine the top 10 URLs before and after the nodes isolation, the following function was implemented:
+\vspace{.5em}
 \begin{lstlisting}[style=Matlab-editor]
 function T = pagerank_table(x, U, n)
     [x_desc, idxs_desc] = sort(x, 'descend');
@@ -339,9 +421,9 @@ function T = pagerank_table(x, U, n)
     T = table(top_ranks, top_urls, 'VariableNames', {'Rank', 'URL'})
 end
 \end{lstlisting}
-\vspace{1em}
+\vspace{.5em}
 Where $\vec{x}$ is the page rank results vector and $n$ the max number of URLs to include in the final ranking. Giving the page rank results, calculated by \texttt{pagerank.m}, to the function, the following outputs are produced:
-\\[.5em]
+\vspace{.5em}
 {
 \hypersetup{hidelinks}
 \begin{table}[htb!]
@@ -364,7 +446,6 @@ Where $\vec{x}$ is the page rank results vector and $n$ the max number of URLs t
     \end{tabular}
     \caption{top 10 \texttt{WIKI450.mat} page ranks}
 \end{table}
-
 \begin{table}[htb!]
     \centering
     \begin{tabular}{lp{12cm}}
@@ -386,10 +467,7 @@ Where $\vec{x}$ is the page rank results vector and $n$ the max number of URLs t
     \caption{top 10 \texttt{WIKI450\_ISO.mat} page ranks}
 \end{table}
 }
-
 \vspace{1em}
-
-\begin{comment}
 \begin{figure}[htb!]
      \centering
      \begin{subfigure}[b]{0.88\textwidth}
@@ -410,12 +488,11 @@ Where $\vec{x}$ is the page rank results vector and $n$ the max number of URLs t
      \caption{Before and after node isolation page ranks}
      \label{fig:befaftwikipr}
 \end{figure}
-\end{comment}
-\vspace{1em}
+\\[1em]
 When computing the page ranks for \texttt{WIKI450.mat} and \texttt{WIKI450\_ISO.mat}, it can be observed how the isolation of the previous nodes only impacted the ranks that were already influential, leaving the lower ranks untouched. At the beginning of the graph, it is noticeable how a group of nodes had their rank plummet to zero, likely because their influence relied solely on the influence of isolated nodes. It is a "rich get richer" situation since most of the network's total influence is concentrated in a restricted number of nodes and influential nodes tend to link to other influential nodes.
 
 \section{Introduction to HPC: Algorithmic performance \points{1}}
-To benchmark the three algorithms implementations, each matlab function was temporarily modified to use the \texttt{tic} and \texttt{toc} functions returing the the elapsed time and number of iterations, wrapping the core of the algorithm, ignoring the irrelevant steps. To automate this process, the function \texttt{benchmark.m} was implemented. The function samples the time performance of the target algorithm 5 times to account for outliers and calculates the average of these samples. The benchmark results for each algorithm and provided matrix, were stored in a $3 \times 6$ matrix, one for times and one for iterations, and exported to \texttt{bench\_times.mat} and \texttt{bench\_iters.mat}. With these results, Gemini was prompted to generate a matlab function to plot a standard and semi-log scale chart for each algorithm.
+To benchmark the three algorithms implementations, each algorithm implementation was temporarily modified to use the \texttt{tic} and \texttt{toc} functions returing the the elapsed time and number of iterations, wrapping the core of the algorithm, ignoring the irrelevant steps. To automate this process, the function \texttt{benchmark.m} was implemented. The function samples the time performance of the target algorithm 5 times to account for outliers and calculates the average of these samples. The benchmark results for each algorithm and provided matrix, were stored in a $3 \times 6$ matrix, one for times and one for iterations, and exported to \texttt{bench\_times.mat} and \texttt{bench\_iters.mat}. With these results, Gemini was prompted to generate a matlab function to plot a standard and semi-log scale chart for each algorithm.
 \begin{figure}[htb!]
      \centering
      \begin{subfigure}[b]{0.48\textwidth}
@@ -445,23 +522,23 @@ The primary advantage of the linear scale is its ability to convey absolute phys
 \paragraph{Utility of the Logarithmic Scale}
 This scale is particularly crucial, in this case, for plotting the iterations. Because the Power Method requires roughly one order of magnitude more iterations than Inverse Iteration ($\sim 50$ vs. $\sim 8$), plotting these on a standard linear scale would compresses the Inverse Iteration data, making it appear as a flat line at zero. The logarithmic visualization proves that both methods maintain a stable iteration count independently of the matrix size $n$.
 
-\begin{table}[htbp]
-\centering
-\begin{tabular}{rccccccc}
-\toprule
-& \multicolumn{2}{c}{\textbf{Backslash}} & \multicolumn{2}{c}{\textbf{Power Method}} & \multicolumn{2}{c}{\textbf{Inv. Iteration}} \\
-\cmidrule(lr){2-3} \cmidrule(lr){4-5} \cmidrule(lr){6-7}
-\textbf{n} & \textbf{Time} & \textbf{Iter.} & \textbf{Time} & \textbf{Iter.} & \textbf{Time} & \textbf{Iter.} \\
-\midrule
-250  & 1  & --- & 17 & 150 & 18  & 5 \\
-500  & 4  & --- & 20 & 155 & 43  & 6 \\
-750  & 8  & --- & 29 & 148 & 82  & 5 \\
-1000 & 16 & --- & 40 & 160 & 222 & 7 \\
-1250 & 41 & --- & 31 & 152 & 370 & 6 \\
-1500 & 61 & --- & 40 & 158 & 585 & 6 \\
-\bottomrule
-\end{tabular}
-\caption{Benchmarks}
+\begin{table}[t!]
+    \centering
+    \begin{tabular}{rccccccc}
+        \toprule
+        & \multicolumn{2}{c}{\textbf{Backslash}} & \multicolumn{2}{c}{\textbf{Power Method}} & \multicolumn{2}{c}{\textbf{Inv. Iteration}} \\
+        \cmidrule(lr){2-3} \cmidrule(lr){4-5} \cmidrule(lr){6-7}
+        \textbf{n} & \textbf{Time} & \textbf{Iter.} & \textbf{Time} & \textbf{Iter.} & \textbf{Time} & \textbf{Iter.} \\
+        \midrule
+        250  & 0.71  & --- & 13.6 & 50 & 35.8  & 9 \\
+        500  & 2.72  & --- & 18.6 & 38 & 53.8  & 9 \\
+        750  & 6.40  & --- & 22.9 & 33 & 81.6  & 8 \\
+        1000 & 14.3 & --- & 80.8 & 30 & 174 & 8 \\
+        1250 & 33.9 & --- & 38.4 & 22 & 345 & 8 \\
+        1500 & 58.1 & --- & 35.3 & 21 & 470 & 8 \\
+        \bottomrule
+    \end{tabular}
+    \caption{Benchmarks, Time in ms}
 \end{table}
 \end{document}
 
